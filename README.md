@@ -1,4 +1,4 @@
-DuplexClock
+CoupleClock
 ===========
 
-Second Clock in Statusbar for different timezone
+Cydia tweak that adds a second clock to the status bar for quick referencing of two timezones from any screen.
