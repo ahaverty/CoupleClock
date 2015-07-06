@@ -13,8 +13,7 @@ void coupleclock_settingsDidUpdate(CFNotificationCenterRef center, void * observ
 	}
 	
 	settings = [NSDictionary dictionaryWithContentsOfFile:PLIST_PATH];
-	
-	//[((SBStatusBarStateAggregator *)CFBridgingRelease(observer)) _updateTimeItems];
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:NSSystemClockDidChangeNotification object:nil userInfo:nil];
 }
 
