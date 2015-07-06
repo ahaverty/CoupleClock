@@ -1,9 +1,9 @@
-Package: com.sharedroutine.duplexclock
-Name: DuplexClock
+Package: com.ahaverty.coupleclock
+Name: CoupleClock
 Depends: mobilesubstrate
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
-Maintainer: sharedRoutine
-Author: sharedRoutine
+Description: Add a second clock to the status bar for quick referencing of two timezones from any screen.
+Maintainer: Alan Haverty
+Author: Alan Haverty
 Section: Tweaks

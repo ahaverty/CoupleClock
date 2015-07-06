@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>DuplexClockSettings</string>
+	<string>CoupleClockSettings</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.sharedroutine.duplexclocksettings</string>
+	<string>com.ahaverty.coupleclock</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -21,8 +21,8 @@
 	<key>DTPlatformName</key>
 	<string>iphoneos</string>
 	<key>MinimumOSVersion</key>
-	<string>3.0</string>
+	<string>8.0</string>
 	<key>NSPrincipalClass</key>
-	<string>DuplexClockSettingsListController</string>
+	<string>CoupleClockSettingsListController</string>
 </dict>
 </plist>

@@ -1,0 +1,10 @@
+{
+	entry = {
+		bundle = CoupleClockSettings;
+		cell = PSLinkCell;
+		detail = "CoupleClockSettingsListController";
+		icon = "CoupleClock.png";
+		isController = 1;
+		label = "Couple Clock";
+	};
+}
