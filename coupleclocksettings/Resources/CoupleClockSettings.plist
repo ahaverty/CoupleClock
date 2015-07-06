@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>CoupleClock Settings</string>
+			<string>Timezone Settings</string>
 			<key>footerText</key>
 			<string>CoupleClock allows you to add a second clock to the status bar for quick referencing of two timezones from any screen. Based on DuplexClock by SharedRoutine</string>
 		</dict>
@@ -16,7 +16,7 @@
 			<key>cell</key>
 			<string>PSLinkListCell</string>
 			<key>default</key>
-			<string>Pacific/Norfolk</string>
+			<string>America/Los_Angeles</string>
 			<key>PostNotification</key>
 			<string>coupleclock_settingsupdated_notification</string>
 			<key>defaults</key>
@@ -34,6 +34,6 @@
 		</dict>
 	</array>
 	<key>title</key>
-	<string>Couple Clock Settings</string>
+	<string>Couple Clock</string>
 </dict>
 </plist>

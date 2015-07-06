@@ -44,13 +44,11 @@ NSDateFormatter *dateFormatter;
 			
 			NSString *defaultDateString = [dateFormatter stringFromDate:[NSDate date]];
 			
-			//[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:settings[@"kTimeZone"]]];
+			[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:settings[@"kTimeZone"]]];
 			
-			//NSString *secondDateString = [dateFormatter stringFromDate:[NSDate date]];
+			NSString *secondDateString = [dateFormatter stringFromDate:[NSDate date]];
 			
-			//[dateFormatter setDateFormat:[NSString stringWithFormat:@"'%@' - '%@'",defaultDateString,secondDateString]];
-			
-			[dateFormatter setDateFormat:[NSString stringWithFormat:@"'%@' - test",defaultDateString]];
+			[dateFormatter setDateFormat:[NSString stringWithFormat:@"'%@' - '%@'",defaultDateString,secondDateString]];
 			
 			MSHookIvar<NSDateFormatter *>(self, "_timeItemDateFormatter") = dateFormatter;
 			dateFormatter = nil;
