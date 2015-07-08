@@ -11,7 +11,6 @@
 }
 
 - (id)specifiers {
-
 	if(_specifiers == nil) {
 		_specifiers = [[self loadSpecifiersFromPlistName:@"CoupleClockSettings" target:self] retain];
 	}
