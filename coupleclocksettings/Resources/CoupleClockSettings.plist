@@ -18,11 +18,11 @@
 			<key>default</key>
 			<string>America/Los_Angeles</string>
 			<key>PostNotification</key>
-			<string>coupleclock_settingsupdated_notification</string>
+			<string>com.ahaverty.coupleclock/preferences.changed</string>
 			<key>defaults</key>
 			<string>com.ahaverty.coupleclock</string>
 			<key>key</key>
-			<string>kTimeZone</string>
+			<string>secondaryTimeZone</string>
 			<key>titlesDataSource</key>
 			<string>timeZones</string>
 			<key>valuesDataSource</key>

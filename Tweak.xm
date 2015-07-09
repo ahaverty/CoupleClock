@@ -6,10 +6,12 @@
 @end
 
 void coupleclock_settingsDidUpdate(CFNotificationCenterRef center, void * observer, CFStringRef name, const void * object, CFDictionaryRef userInfo) {
-	[[NSNotificationCenter defaultCenter] postNotificationName:NSSystemClockDidChangeNotification object:nil userInfo:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"com.ahaverty.coupleclock/update.time" object:nil userInfo:nil];
 }
 
-NSDateFormatter *dateFormatter;
+NSDateFormatter *styleFormatter;
+NSDateFormatter *primaryClockFormatter;
+NSDateFormatter *secondClockFormatter;
 
 %group CoupleClock
 	%hook SBStatusBarStateAggregator
@@ -25,25 +27,45 @@ NSDateFormatter *dateFormatter;
 			self = %orig;
 
 			if (self) {
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updateTimeItems) name:NSSystemClockDidChangeNotification object:nil];
-				CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, coupleclock_settingsDidUpdate, CFSTR("coupleclock_settingsupdated_notification"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+			
+				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updateTimeItems) name:@"com.ahaverty.coupleclock/update.time" object:nil];
+				
+				CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+												NULL,
+												coupleclock_settingsDidUpdate,
+												CFSTR("com.ahaverty.coupleclock/preferences.changed"),
+												NULL,
+												CFNotificationSuspensionBehaviorCoalesce);
 			}
 			
 			return self;
 		}
 
 		- (void)_updateTimeItems {
-			NSDictionary *settings2 = [self coupleclock_getSettings];
 			
-			dateFormatter = [[NSDateFormatter alloc] init];
-			[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-			[dateFormatter setDateFormat:@"HH:mm"];
-			NSString *defaultDateString = [dateFormatter stringFromDate:[NSDate date]];
-			[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:settings2[@"kTimeZone"]]];
-			NSString *secondDateString = [dateFormatter stringFromDate:[NSDate date]];
-			[dateFormatter setDateFormat:[NSString stringWithFormat:@"'%@' - '%@'",defaultDateString,secondDateString]];
-			MSHookIvar<NSDateFormatter *>(self, "_timeItemDateFormatter") = dateFormatter;
-			dateFormatter = nil;
+			NSString *timeStyle = @"HH:mm";
+			NSDictionary *settings = [self coupleclock_getSettings];
+			NSDate *currentDate = [NSDate date];
+			
+			styleFormatter = [[NSDateFormatter alloc] init];
+			
+			primaryClockFormatter = [[NSDateFormatter alloc] init];
+			secondClockFormatter = [[NSDateFormatter alloc] init];
+			
+			[primaryClockFormatter setTimeStyle:NSDateFormatterNoStyle];
+			[primaryClockFormatter setDateFormat:timeStyle];	//add settings for customizing format
+			[secondClockFormatter setDateFormat:timeStyle];	//add settings for customizing format
+			[secondClockFormatter setTimeZone:[NSTimeZone timeZoneWithName:settings[@"secondaryTimeZone"]]];
+			
+			NSString *primaryDateString = [primaryClockFormatter stringFromDate:currentDate];
+			NSString *secondaryDateString = [secondClockFormatter stringFromDate:currentDate];
+			
+			NSLog(@"[coupleclock] P: %@", primaryDateString);
+			NSLog(@"[coupleclock] S: %@", secondaryDateString);
+			
+			[styleFormatter setDateFormat:[NSString stringWithFormat:@"'%@' - '%@'", primaryDateString, secondaryDateString]];	//add setting for customizing divider character
+			MSHookIvar<NSDateFormatter *>(self, "_timeItemDateFormatter") = styleFormatter;
+			styleFormatter = nil;
 			
 			%orig;
 		}
