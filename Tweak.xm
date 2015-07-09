@@ -52,14 +52,14 @@ NSDateFormatter *secondClockFormatter;
 
 			if (self) {
 				
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updateTimeItems) name:@"com.ahaverty.coupleclock/update.time" object:nil];
+				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_resetTimeItemFormatter) name:@"com.ahaverty.coupleclock/update.time" object:nil];
 				
 				CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
 												NULL,
 												coupleclock_settingsDidUpdate,
-												CFSTR("com.ahaverty.coupleclock/preferences.changed"),
+												CFSTR("com.ahaverty.coupleclock/preferencesChanged"),
 												NULL,
-												CFNotificationSuspensionBehaviorCoalesce);
+												CFNotificationSuspensionBehaviorDeliverImmediately);
 			}
 			
 			return self;
@@ -67,12 +67,15 @@ NSDateFormatter *secondClockFormatter;
 
 		-(void)_updateTimeItems {
 			
-			//TODO settings to toggle
-			if (self) {
+			NSDictionary *settings = [self coupleClockGetSettings];
+			
+			if ([settings[@"enableCoupleClockToggle"] integerValue] == 1) {
 				MSHookIvar<NSDateFormatter *>(self, "_timeItemDateFormatter") = [self coupleClockGetCustomTime];
 			}
 			
 			%orig;
+			
+			MSHookIvar<NSDateFormatter *>(self, "_timeItemDateFormatter") = nil;
 		}
 	%end
 %end

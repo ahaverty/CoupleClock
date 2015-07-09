@@ -6,6 +6,20 @@
 	<array>
 		<dict>
 			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.ahaverty.coupleclock</string>
+			<key>key</key>
+			<string>enableCoupleClockToggle</string>
+			<key>label</key>
+			<string>Enabled</string>
+			<key>PostNotification</key>
+			<string>com.ahaverty.coupleclock/preferencesChanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Timezone Settings</string>
@@ -18,7 +32,7 @@
 			<key>default</key>
 			<string>America/Los_Angeles</string>
 			<key>PostNotification</key>
-			<string>com.ahaverty.coupleclock/preferences.changed</string>
+			<string>com.ahaverty.coupleclock/preferencesChanged</string>
 			<key>defaults</key>
 			<string>com.ahaverty.coupleclock</string>
 			<key>key</key>
