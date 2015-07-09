@@ -6,6 +6,7 @@
 @end
 
 void coupleclock_settingsDidUpdate(CFNotificationCenterRef center, void * observer, CFStringRef name, const void * object, CFDictionaryRef userInfo) {
+	[NSThread sleepForTimeInterval:0.1f];	//Added delay due to update time method running faster than plist file was saving
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"com.ahaverty.coupleclock/update.time" object:nil userInfo:nil];
 }
 
@@ -18,16 +19,14 @@ NSDateFormatter *secondClockFormatter;
 	
 		%new
 		- (NSDictionary *) coupleclock_getSettings {
-			NSDictionary *settings;
-			settings = [NSDictionary dictionaryWithContentsOfFile:PLIST_PATH];
-			return settings;
+			return [NSDictionary dictionaryWithContentsOfFile:PLIST_PATH];
 		}
 	
 		- (id)init {
 			self = %orig;
 
 			if (self) {
-			
+				
 				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updateTimeItems) name:@"com.ahaverty.coupleclock/update.time" object:nil];
 				
 				CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
@@ -42,11 +41,11 @@ NSDateFormatter *secondClockFormatter;
 		}
 
 		- (void)_updateTimeItems {
-			
+		
 			NSString *timeStyle = @"HH:mm";
 			NSDictionary *settings = [self coupleclock_getSettings];
 			NSDate *currentDate = [NSDate date];
-			
+
 			styleFormatter = [[NSDateFormatter alloc] init];
 			
 			primaryClockFormatter = [[NSDateFormatter alloc] init];
@@ -59,9 +58,6 @@ NSDateFormatter *secondClockFormatter;
 			
 			NSString *primaryDateString = [primaryClockFormatter stringFromDate:currentDate];
 			NSString *secondaryDateString = [secondClockFormatter stringFromDate:currentDate];
-			
-			NSLog(@"[coupleclock] P: %@", primaryDateString);
-			NSLog(@"[coupleclock] S: %@", secondaryDateString);
 			
 			[styleFormatter setDateFormat:[NSString stringWithFormat:@"'%@' - '%@'", primaryDateString, secondaryDateString]];	//add setting for customizing divider character
 			MSHookIvar<NSDateFormatter *>(self, "_timeItemDateFormatter") = styleFormatter;
